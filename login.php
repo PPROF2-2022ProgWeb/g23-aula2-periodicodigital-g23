@@ -1,3 +1,45 @@
+<?php 
+
+require_once("Conexion.php");
+session_start();
+
+if(isset($_POST["login"]))
+{
+    if(!empty($_POST['User_Name']) && !empty($_POST['Password']))
+    {
+        $User_Name=$_POST['nombreUsuario'];
+        $Password=$_POST['password'];
+        $query = $connection->prepare("SELECT * FROM usuarios WHERE User_Name=:nombreUsuario");
+        $query->bindParam("nombreUsuario", $User_Name, PDO::PARAM_STR);
+        $query->execute();
+
+        $result=$query->fetch(PDO::FETCH_ASSOC);
+
+        if(!$result)
+        {
+            echo '<p class="error"> La combinaciòn de Ususario y contraseña es errónea </p>';
+        }
+        else 
+        {
+            if(password_verify($Password, $result[$Password]))
+            {
+                $_SESSION['session_username']='User_Name';
+                header("Location: index.html");
+            }
+            else
+            {
+                $message = "La combinaciòn de Ususario y contraseña es errónea";
+            }
+        }    
+    }
+    else 
+    {
+        $message = "Todos los campos son requeridos";
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="es" class="no-js">
 
@@ -132,49 +174,6 @@
         </div>
     </div>
     
-    <?php 
-
-    require_once("Conexion.php");
-    session_start();
-    
-    if(isset($_POST["login"]))
-    {
-        if(!empty($_POST['User_Name']) && !empty($_POST['Password']))
-        {
-            $User_Name=$_POST['nombreUsuario'];
-            $Password=$_POST['password'];
-            $query = $connection->prepare("SELECT * FROM usuarios WHERE User_Name=:nombreUsuario");
-            $query->bindParam("nombreUsuario", $User_Name, PDO::PARAM_STR);
-            $query->execute();
-    
-            $result=$query->fetch(PDO::FETCH_ASSOC);
-    
-            if(!$result)
-            {
-                echo '<p class="error"> La combinaciòn de Ususario y contraseña es errónea </p>';
-            }
-            else 
-            {
-                if(password_verify($Password, $result[$Password]))
-                {
-                    $_SESSION['session_username']='User_Name';
-                    header("Location: index.html");
-                }
-                else
-                {
-                    $message = "La combinaciòn de Ususario y contraseña es errónea";
-                }
-            }    
-        }
-        else 
-        {
-            $message = "Todos los campos son requeridos";
-        }
-    }
-    
-    ?>
-    
-
     <section>
 
         <div id="Contenedor">
@@ -199,8 +198,6 @@
                     <br>
                     <button class="btn btn-lg btn-primary btn-block btn-signin" id="IngresoLog"
                         type="submit">Entrar</button>
-                    <div class="opcioncontra"><a href="">Olvidaste tu contraseña?</a></div>
-    
                 </form>
     
     
