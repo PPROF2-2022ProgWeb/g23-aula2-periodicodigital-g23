@@ -11,7 +11,14 @@ import {InicioComponent,
   MarcosCVComponent,
   MaxiCVComponent,
   RodrigoCVComponent,
-  YamilCVComponent
+  YamilCVComponent,
+  AlertaCoronavirusComponent,
+  FormularioComponent,
+  FormularioBienvenidaComponent,
+  GlobalizacionComponent,
+  SembrandoEnCasaComponent,
+  TrabajoInformalComponent
+
 } from "./Pages/index.paginas";
 
 const routes: Routes = [
@@ -26,6 +33,12 @@ const routes: Routes = [
   { path: 'MaxiCV', component: MaxiCVComponent },
   { path: 'RodrigoCV', component: RodrigoCVComponent },
   { path: 'YamilCV', component: YamilCVComponent },
+  { path: 'AlertaCoronavirus', component: AlertaCoronavirusComponent },
+  { path: 'Formulario', component: FormularioComponent },
+  { path: 'FormularioBienvenida', component: FormularioBienvenidaComponent },
+  { path: 'Globalizacion', component: GlobalizacionComponent },
+  { path: 'SembrandoEnCasa', component: SembrandoEnCasaComponent },
+  { path: 'TrabajoInformal', component: TrabajoInformalComponent },
   { path: '**', pathMatch:'full', redirectTo: 'Inicio' }
 ];
 
